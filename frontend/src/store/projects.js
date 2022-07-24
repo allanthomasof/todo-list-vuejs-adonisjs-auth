@@ -18,6 +18,14 @@ const actions = {
       throw error.message
     }
   },
+  async updateProjectService(store, data) {
+    try {
+      const res = await http.put(process.env.VUE_APP_BASE_API_URL + '/projects', data)
+      return res
+    } catch (error) {
+      throw error.message
+    }
+  },
   async deleteProjectService(store, id) {
     try {
       const res = await http.delete(process.env.VUE_APP_BASE_API_URL + '/projects/' + id)

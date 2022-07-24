@@ -3,7 +3,7 @@
     <v-app-bar elevation="0" class="pr-2" dense>
       <h5>{{ project.name }}</h5>
       <v-spacer/>
-      <v-btn icon small>
+      <v-btn icon small @click="() => modalEdit = true">
         <v-icon color="blue" size="20">mdi-pen</v-icon>
       </v-btn>
       <div style="width: 5px"></div>
@@ -87,6 +87,17 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-dialog v-model="modalEdit" width="400px">
+      <CardEditProject
+        :project="project"
+        :closeDialog="(reload) => {
+          modalEdit = false;
+          if (reload) {
+            reloadProjects();
+          }
+        }"
+      ></CardEditProject>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -100,14 +111,16 @@ export default {
     'reloadProjects'
   ],
 
-
+  components: {
+    'CardEditProject': () => import('./subcomponents/CardEditProject')
+  },
 
   data: () => {
     return {
-      newProject: '',
       description: '',
       snackbarText: '',
-      snackbar: false
+      snackbar: false,
+      modalEdit: false,
     }
   },
 
